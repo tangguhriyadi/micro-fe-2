@@ -1,53 +1,51 @@
-const deps = require('../package.json').dependencies;
-const { ModuleFederationPlugin } = require('webpack').container;
-const { FederatedTypesPlugin } = require('@module-federation/typescript');
-const { UniversalFederationPlugin } = require('@module-federation/node');
-
+const deps = require("../package.json").dependencies;
+const { ModuleFederationPlugin } = require("webpack").container;
+const { UniversalFederationPlugin } = require("@module-federation/node");
 module.exports = {
-  client: new ModuleFederationPlugin({
-    name: 'app2',
-    filename: 'remoteEntry.js',
-    remotes: {
-    //   remote2: 'remote2@http://localhost:3002/client/remoteEntry.js',
-    },
-    exposes: {
-      './Button': './src/Button',
-    },
-    shared: {
-      ...deps,
-      react: {
-        singleton: true,
-        requiredVersion: deps.react,
-      },
-      'react-dom': {
-        singleton: true,
-        requiredVersion: deps['react-dom'],
-      },
-    },
-  }),
-  server: [
-    new UniversalFederationPlugin({
-      name: 'app2',
-      filename: 'remoteEntry.js',
-      library: { type: 'commonjs-module' },
-      isServer: true,
-      remotes: {
-        // remote2: 'remote2@http://localhost:3002/server/remoteEntry.js',
-      },
-      exposes: {
-        './Button': './src/Button',
-      },
-      shared: {
-        ...deps,
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
+    client: new ModuleFederationPlugin({
+        name: "app2",
+        filename: "remoteEntry.js",
+        remotes: {
+            //   remote2: 'remote2@http://localhost:3002/client/remoteEntry.js',
         },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
+        exposes: {
+            "./Button": "./src/Button",
         },
-      },
+        shared: {
+            ...deps,
+            react: {
+                singleton: true,
+                requiredVersion: deps.react,
+            },
+            "react-dom": {
+                singleton: true,
+                requiredVersion: deps["react-dom"],
+            },
+        },
     }),
-  ],
+    server: [
+        new UniversalFederationPlugin({
+            name: "app2",
+            filename: "remoteEntry.js",
+            library: { type: "commonjs-module" },
+            isServer: true,
+            remotes: {
+                // remote2: 'remote2@http://localhost:3002/server/remoteEntry.js',
+            },
+            exposes: {
+                "./Button": "./src/Button",
+            },
+            shared: {
+                ...deps,
+                react: {
+                    singleton: true,
+                    requiredVersion: deps.react,
+                },
+                "react-dom": {
+                    singleton: true,
+                    requiredVersion: deps["react-dom"],
+                },
+            },
+        }),
+    ],
 };
