@@ -1,5 +1,6 @@
 const deps = require('../package.json').dependencies;
 const { ModuleFederationPlugin } = require('webpack').container;
+const { FederatedTypesPlugin } = require('@module-federation/typescript');
 const { UniversalFederationPlugin } = require('@module-federation/node');
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
     //   remote2: 'remote2@http://localhost:3002/client/remoteEntry.js',
     },
     exposes: {
-    //   './Content': './src/Content',
+      './Button': './src/Button',
     },
     shared: {
       ...deps,
@@ -34,7 +35,7 @@ module.exports = {
         // remote2: 'remote2@http://localhost:3002/server/remoteEntry.js',
       },
       exposes: {
-        // './Content': './src/Content',
+        './Button': './src/Button',
       },
       shared: {
         ...deps,

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Content from './Content';
+import Button from './Button';
 
-const App = () => <Content />;
+const App = () => <Button label='example' />;
 
 ReactDOM.render(<App />, document.getElementById('app'));
